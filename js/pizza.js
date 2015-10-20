@@ -4,11 +4,9 @@ function hideTotal() {
     var priceField = document.getElementById('totalPrice');
     priceField.style.display = 'none';
 }
-
 if (document.addEventListener) {
     document.addEventListener("DOMContentLoaded", hideTotal, false);
 }
-
 //  Hide Other field unless Other option is chosen in dropdown
 var selectLocation = document.getElementById('location'),
     onChange = function (event) {
@@ -16,7 +14,6 @@ var selectLocation = document.getElementById('location'),
         var shown = this.options[this.selectedIndex].value === "other";
         document.getElementById('otherlocation').style.display = shown ? 'block' : 'none';
     };
-
 if (window.addEventListener) {
     selectLocation.addEventListener('change', onChange, false);
 } else {
@@ -30,8 +27,8 @@ if (window.addEventListener) {
 function validate() {
     "use strict";
     var theName = document.pizzaForm.name.value;
-    var nameExp = /[0-9]/;
-    if (document.pizzaForm.name.value === "" || nameExp.test(theName) === true) {
+    var nameExp = /^([a-zA-Z ]){2,30}$/;
+    if (nameExp.test(theName) === false) {
         window.alert("Please provide your name");
         document.pizzaForm.name.focus();
         return false;
@@ -53,7 +50,7 @@ function validate() {
         document.pizzaForm.state.focus();
         return false;
     }
-    var zipExp = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+    var zipExp = /^[0-9]{5}(?:-[0-9]{4})?$/;
     var theZip = document.pizzaForm.zipcode.value;
     if (document.pizzaForm.zipcode.value === "" || zipExp.test(theZip) === false) {
         window.alert("Please provide a valid zipcode.");
@@ -77,6 +74,19 @@ function validate() {
     return (true);
 }
 
+////  Run validate function when leaving name field
+//document.getElementById("name").addEventListener("blur", function () {
+//    "use strict";
+//    validate();
+//});
+//
+////  Run validate function when leaving zipcode field
+//document.getElementById("zipcode").addEventListener("blur", function () {
+//    "use strict";
+//    validate();
+//});
+//
+
 //  Run validate function when leaving email field
 document.getElementById("email").addEventListener("blur", function () {
     "use strict";
@@ -85,22 +95,26 @@ document.getElementById("email").addEventListener("blur", function () {
 
 //  PRICES
 var handTossed = {
+    choose: "Choose a Size (0)",
     small: "Small ($9.99)",
     medium: "Medium ($12.99)",
     large: "Large ($14.99)"
 };
 
 var thinCrust = {
+    choose: "Choose a Size (0)",
     medium: "Medium ($11.99)",
     large: "Large ($13.99)"
 };
     
 var newYork = {
+    choose: "Choose a Size (0)",
     large: "Large ($16.99)",
     exlarge: "Extra Large ($19.99)"
 };
     
 var glutenFree = {
+    choose: "Choose a Size (0)",
     small: "Small ($10.99)"
 };
 
@@ -117,24 +131,11 @@ var saucePrices = {
     bbq: 1.99
 };
 
-document.getElementById("sizeOptions").addEventListener("change", function () {
-    "use strict";
-    calculateTotal();
-});
-
 // Add Size and Cost Options of Selected Crust to Dropdown list
-
-//  Set to Hand Tossed as Default
-var select = document.getElementById("sizeOptions");
-for (index in handTossed) {
-    select.options[select.options.length] = new Option(handTossed[index], index);
-}
-
 function getRadioVal(form, dough) {
     "use strict";
     var val;
     var radios = form.elements[dough];
-    
     for (var i = 0, len = radios.length; i < len; i++) {
         if ( radios[i].checked ) {
             val = radios[i].value;
@@ -142,37 +143,40 @@ function getRadioVal(form, dough) {
         }
     }
     return val;
-    window.console.log(val);
 }
 
 document.getElementById('pizza').onchange = function() {
-    
 var dropdown = document.getElementById("sizeOptions");
-//dropdown.options.length = 0;    
 var val = getRadioVal(this, 'dough');
+    
+var list = document.getElementById("sizeOptions");
+// As long as <select list> has a child node, remove it
+while (list.hasChildNodes()) {   
+    list.removeChild(list.firstChild);
+}     
     
 if (val === "handTossed") {
 var select = document.getElementById("sizeOptions");
 for(index in handTossed) {
-select.options[select.options.length] = new Option(handTossed[index], index);
+select.options[select.options.length] = new Option(handTossed[index]);
 }
 }
 else if (val === "thinCrust") {
 var select = document.getElementById("sizeOptions");
 for(index in thinCrust) {
-select.options[select.options.length] = new Option(thinCrust[index], index);
+select.options[select.options.length] = new Option(thinCrust[index]);
 }
 }
 else if (val === "newYork") {
 var select = document.getElementById("sizeOptions");
 for(index in newYork) {
-select.options[select.options.length] = new Option(newYork[index], index);
+select.options[select.options.length] = new Option(newYork[index]);
 }
 }
 else {
 var select = document.getElementById("sizeOptions");
 for(index in glutenFree) {
-select.options[select.options.length] = new Option(glutenFree[index], index);
+select.options[select.options.length] = new Option(glutenFree[index]);
 } 
 }
 }
@@ -191,15 +195,11 @@ var hideBilling = document.getElementById("billingInfo");
 hideBilling.classList.add("hideBilling");
 
 document.getElementById("finishedBuilding").addEventListener("click", function () {
-    
 var confirmOptions = window.confirm("Are You Sure You're Done?");
 if (confirmOptions === true) {
 var showBilling = document.getElementById("billingInfo");
 showBilling.classList.remove("hideBilling");
-//});    
-} else {
-    x = "You pressed Cancel!";
-}
+} 
 });
                                                              
 //  GETTING COSTS
@@ -212,6 +212,11 @@ function getCrustPrice()
     return crustPrice;
 }
 
+document.getElementById("sizeOptions").addEventListener("change", function () {
+    "use strict";
+    calculateTotal();
+});
+
 function getCheesePrice()
 {
     var cheesePrice = 0;
@@ -221,6 +226,11 @@ function getCheesePrice()
     return cheesePrice;
 }
 
+document.getElementById("cheese").addEventListener("change", function () {
+    "use strict";
+    getCheesePrice(), calculateTotal();
+});
+
 function getSaucePrice()
 {
     var saucePrice = 0;
@@ -229,6 +239,11 @@ function getSaucePrice()
     saucePrice = saucePrices[selectedSauce.value];
     return saucePrice;
 }
+
+document.getElementById("sauce").addEventListener("change", function () {
+    "use strict";
+    getSaucePrice(), calculateTotal();
+});
 
 function getToppingsPrice()
 {
@@ -292,6 +307,61 @@ function getToppingsPrice()
     return toppingPrice;
 }
 
+document.getElementById("pepperoni").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("sausage").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("ham").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("bacon").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("salami").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("peppers").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("olives").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("jalapenos").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("mushrooms").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("pineapple").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
+document.getElementById("onion").addEventListener("change", function () {
+    "use strict";
+    getToppingsPrice(), calculateTotal();
+});
+
 //  Add it all up
 function calculateTotal()
 {
@@ -340,6 +410,13 @@ document.getElementById("cardNumber").addEventListener("blur", function () {
 
 //  Display Card Type
 function cardType() {
+    
+var list = document.getElementById("cardVendor");
+// As long as <div> has a child node, remove it
+while (list.hasChildNodes()) {   
+    list.removeChild(list.firstChild);
+}  
+    
 var cardTemp = document.pizzaForm.cardNumber.value;
 var firstNum = cardTemp.charAt(0);
 var secondNum = cardTemp.charAt(1);
@@ -387,32 +464,29 @@ document.getElementById("cardNumber").addEventListener("blur", function () {
 });
 
 function ccValidate() {
+    
+var list = document.getElementById("invalidCard");
+// As long as <div> has a child node, remove it
+while (list.hasChildNodes()) {   
+    list.removeChild(list.firstChild);
+}     
+    
     var str = document.pizzaForm.cardNumber.value;
-//    window.console.log("orig: " + str);
     var res = str.split("");
-//    window.console.log("Split: " + res);
     res.reverse();
-//    window.console.log("Reversed: " + res);
     for (var i = 1; i < res.length; i += 2) {
         res[i] *= 2;
     }
-//    window.console.log("Doubled: " + res);
 var doubled = res;
 var joined = doubled.join("");
-//window.console.log("Joined: " + joined);
-    
 var newSplit = joined.split("");    
-//window.console.log("New Split: " + newSplit + " " + typeof newSplit);
-    
 for(var i = 0, len = newSplit.length; i < len; i++){
     newSplit[i] = parseInt(newSplit[i], 10);
 }  
-    
 var totalAmount = 0;
 for (var x = 0; x < newSplit.length; x++) {
     totalAmount += newSplit[x]; 
 }
-    
 if (totalAmount % 10 === 0) {
     window.console.log("Valid Card Number");
 }
@@ -437,7 +511,7 @@ document.getElementById("cardNumber").addEventListener("blur", function () {
 function cvcValidate() {
     "use strict";
     var theCVC = document.pizzaForm.cvc.value;
-    var cvcExp = /[0-9]/;
+    var cvcExp = /^[0-9]+$/;
     if (document.pizzaForm.cvc.value === "" || document.pizzaForm.cvc.value.length !== 3 || cvcExp.test(theCVC) === false) {
         window.alert("Please provide your CVC number");
         document.pizzaForm.cvc.focus();
@@ -456,10 +530,7 @@ d1.setFullYear(document.pizzaForm.year.value, document.pizzaForm.month.value -1,
     
 var d2 = new Date();
 d2.getFullYear;
-    
-//window.console.log("d1: " + d1);
-//window.console.log("d2: " + d2); 
-    
+
 if (d1 < d2) {
 window.alert("The Expiration Date can not be in the past"); 
 }
@@ -468,7 +539,7 @@ window.console.log("The Exp. Date is OK");
 }
 }
 
-//  Run checkCardExp function when selecting Expiration Year option
+//  Run checkCardExp function when selecting Expiration Year or Month options
 document.getElementById("month").addEventListener("change", function () {
     "use strict";
     checkCardExp();
@@ -479,15 +550,20 @@ document.getElementById("year").addEventListener("change", function () {
     checkCardExp();
 });
 
+//  Go to Thank you page on form submission
+placeOrder.addEventListener("click", function () {
+window.open("thanks.html", "_self", "toolbar=yes, scrollbars=yes, resizable=yes, width=1050, height=750");
+}, false);
 
+//  Credit Card test numbers
 //  TEST NUM VISA
-// invalid  4512113014843252
-// valid  4512113014643252
+//  invalid  4512113014843252
+//  valid  4512113014643252
 
 //  TEST NUM MC
-// invalid  5555555557554444 
-// valid  5555555555554444 
+//  invalid  5555555557554444 
+//  valid  5555555555554444 
 
 //  TEST NUM AMEX
-// invalid  371449635598431 
-// valid  371449635398431 
+//  invalid  371449635598431 
+//  valid  371449635398431 
