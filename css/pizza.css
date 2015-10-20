@@ -1,0 +1,55 @@
+.hideme { 
+    display: none;
+}
+
+.showme { 
+    display: block;
+}
+
+.jumbotron {
+    background-image: url("../images/pizza_glutenfree700-300.jpg");
+    background-color: #cccccc;
+}
+
+#totalPrice {
+    background-color: aquamarine;
+    padding: 10px;
+}
+
+div.jumbotron h1 {
+    font-family: 'Lobster', cursive;
+    color: #FFFFFF;
+    text-shadow: 2px 2px #006600;
+}
+
+.jumbotron p {
+    color: #FFFFFF;
+    font-size: 1.65em;
+    letter-spacing: .0125em;
+    font-weight: 700;
+    text-shadow: 2px 2px #CC0000;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+ background-color: #006600;   
+}
+
+a {
+   color: #006600; 
+}
+
+a:hover {
+   color:#CC0000; 
+}
+
+.extras {
+    display: none;
+}
+
+.hideBilling {
+    display: none;
+}
+
+#invalidCard p {
+    color: red;
+}
