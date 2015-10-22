@@ -12,7 +12,9 @@
 }
 
 #totalPrice {
-    background-color: aquamarine;
+    width: 50%;
+    color: #FFFFFF;
+    background-color: #CC0000;
     padding: 10px;
 }
 

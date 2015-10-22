@@ -126,7 +126,7 @@
   <div class="form-group">
     <label for="email" class="col-sm-2 control-label">Email</label>
     <div class="col-sm-10">
-      <input type="email" class="form-control" id="email">
+      <input type="email" class="form-control" id="email" placeholder="Your Email Address">
     </div>
   </div> 
   
@@ -134,7 +134,6 @@
     <p>Select your options.</p>
     
 <div id="totalPrice"></div>
-
 
 <h4>Dough Options</h4>
 <div class="radio">
@@ -165,12 +164,19 @@
   
 <h4>Size and Cost Options</h4>
 
-<select id="sizeOptions" class="form-control"></select>
+<select id="theCrust" class="form-control" name="theCrust" size="1">
+<option value="0">Choose a Size</option>
+<option value="9.99">Small ($9.99)</option>
+<option value="12.99">Medium ($12.99)</option>
+<option value="14.99">Large ($14.99)</option>
+</select>
+
+<!--<select id="sizeOptions" class="form-control"></select>-->
 <br>
 
 <div id="extras">
 <h4>Cheese Options</h4>
-<select id="cheese" class="form-control" name="cheese" onchange="calculateTotal()">
+<select id="cheese" class="form-control" name="cheese">
   <option value="light">Light: no charge</option>
   <option value="normal" selected>Normal: no charge</option>
   <option value="extra">Extra: + $2.99</option>
@@ -179,7 +185,7 @@
 <br>
 
 <h4>Sauce Options</h4>
-<select id="sauce" class="form-control" name="sauce" onchange="calculateTotal()">
+<select id="sauce" class="form-control" name="sauce">
   <option value="regularTom" selected>Regular Tomato: no charge</option>
   <option value="heartyTom">Hearty Tomato: + $.99</option>
   <option value="bbq">BBQ Sauce: + $1.99</option>
@@ -193,67 +199,67 @@
 
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="pepperoni" name="topping" value="pepperoni" onclick="calculateTotal()" />
+    <input type="checkbox" id="pepperoni" name="topping" value="pepperoni">
     Pepperoni
   </label>
 </div>
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="sausage" name="topping" value="sausage" onclick="calculateTotal()" />
+    <input type="checkbox" id="sausage" name="topping" value="sausage">
     Sausage
   </label>
 </div>
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="ham" name="topping"  value="ham" onclick="calculateTotal()" />
+    <input type="checkbox" id="ham" name="topping"  value="ham">
     Ham
   </label>
 </div>
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="bacon" name="topping"  value="bacon" onclick="calculateTotal()" />
+    <input type="checkbox" id="bacon" name="topping"  value="bacon">
     Bacon
   </label>
 </div>
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="salami" name="topping"  value="salami" onclick="calculateTotal()" />
+    <input type="checkbox" id="salami" name="topping"  value="salami">
     Salami
   </label>
 </div>
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="peppers" name="topping" value="peppers" onclick="calculateTotal()" />
+    <input type="checkbox" id="peppers" name="topping" value="peppers"/>
     Peppers
   </label>
 </div>
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="olives" name="topping" value="olives" onclick="calculateTotal()" />
+    <input type="checkbox" id="olives" name="topping" value="olives">
     Olives
   </label>
 </div>
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="jalapenos" name="topping" value="jalapenos" onclick="calculateTotal()" />
+    <input type="checkbox" id="jalapenos" name="topping" value="jalapenos">
     Jalapenos
   </label>
 </div> 
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="mushrooms" name="topping" value="mushrooms" onclick="calculateTotal()" />
+    <input type="checkbox" id="mushrooms" name="topping" value="mushrooms">
     Mushrooms
   </label>
 </div>        
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="pineapple" name="topping" value="pineapple" onclick="calculateTotal()" />
+    <input type="checkbox" id="pineapple" name="topping" value="pineapple">
     Pineapple
   </label>
 </div>        
 <div class="checkbox">
   <label>
-    <input type="checkbox" id="onion" name="topping" value="onion" onclick="calculateTotal()" />
+    <input type="checkbox" id="onion" name="topping" value="onion">
     Onion
   </label>
 </div>
@@ -270,7 +276,7 @@
  
 <div id="billingInfo"> 
 <h4>Billing Information</h4>
-<input type="checkbox" id="billing" name="same-info" value="same-info" onclick="copyLocationInfo()" /> Same as delivery information
+<input type="checkbox" id="billing" name="same-info" value="same-info"> Same as delivery information
 <br><br>
        
  <div class="form-group">
@@ -317,7 +323,7 @@
 		
 <h4>Card details</h4>
   <div class="form-group">
-    <label for="cardnumber" class="col-sm-2 control-label">CC No.</label>
+    <label for="cardNumber" class="col-sm-2 control-label">CC No.</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="cardNumber" placeholder="Credit Card Number">
     </div>
