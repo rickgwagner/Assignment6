@@ -53,3 +53,8 @@ a:hover {
 #invalidCard p {
     color: red;
 }
+
+body {
+    background-image: url("../images/za-bkgrd.png");
+    background-color: #ededed;
+}
